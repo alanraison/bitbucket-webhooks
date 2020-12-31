@@ -1,0 +1,26 @@
+{
+  "name": "bitbucket-webhooks",
+  "version": "0.0.1",
+  "description": "Type Descriptions for Bitbucket Webhook Events",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/alanraison/bitbucket-webhooks.git"
+  },
+  "keywords": [
+    "bitbucket",
+    "typescript"
+  ],
+  "author": "Alan Raison <alanraison@users.noreply.github.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alanraison/bitbucket-webhooks/issues"
+  },
+  "homepage": "https://github.com/alanraison/bitbucket-webhooks#readme",
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
+}
