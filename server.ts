@@ -185,6 +185,7 @@ export interface CommitCommentDeleteEvent extends CommitCommentEvent {
 
 /** A mirror has finished synchronizing this repository. Has the eventKey `mirror:repo_synchronized` */
 export interface MirrorSynchronizedEvent extends Event {
+  eventKey: 'mirror:repo_synchronized',
   /**
    * The mirror which synchronized the changes. This JSON object contains both the `name` and the `id` of the `mirrorServer` which synchronized the changes.
    */
@@ -223,6 +224,13 @@ export interface PullRequestUpdatedEvent extends PullRequestEvent {
   previousFromHash: string;
 }
 
+export interface PullRequestTarget {
+  id: string;
+  displayId: string;
+  latestCommit: string;
+  latestChangeset: string;
+}
+
 /** Pull Request Modified */
 export interface PullRequestModifiedEvent extends PullRequestEvent {
   eventKey: 'pr:modified';
@@ -231,11 +239,11 @@ export interface PullRequestModifiedEvent extends PullRequestEvent {
   /** Previous description of pull request, may not have changed */
   previousDescription: string;
   /** Previous target of the pull request, may not have changed */
-  previousTarget: string;
+  previousTarget: PullRequestTarget;
 }
 
 /** Reviewers added or removed */
-export interface PullRequestReviewersUpdated extends PullRequestEvent {
+export interface PullRequestReviewersUpdatedEvent extends PullRequestEvent {
   eventKey: 'pr:reviewer:updated';
   /** Users that are no longer reviewers */
   removedReviewers: User[];
