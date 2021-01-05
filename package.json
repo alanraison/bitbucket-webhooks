@@ -2,9 +2,9 @@
   "name": "bitbucket-webhooks",
   "version": "0.0.1",
   "description": "Type Descriptions for Bitbucket Webhook Events",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "clean": "find . \\( -name '*.js' -o -name '*.d.ts' \\) -a \\( -not -path './node_modules/*' \\) -a \\( -not -path './server.d.ts' \\) -delete",
+    "clean": "find . \\( -name '*.js' -o -name '*.d.ts' \\) -a \\( -not -path './node_modules/*' \\) -delete",
     "build": "tsc -d",
     "pretest": "npm run build",
     "test": "tsd"
