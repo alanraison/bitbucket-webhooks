@@ -1,5 +1,11 @@
+export interface HateosObject {
+  links?: {
+    [name: string]: any[]
+  };
+}
+
 /** Represents a Bitbucket User */
-export interface User {
+export interface User extends HateosObject {
   name: string;
   emailAddress: string;
   id: number;
@@ -10,16 +16,17 @@ export interface User {
 }
 
 /** A Bitbucket project; a collection of repositories */
-export interface Project {
+export interface Project extends HateosObject {
   key: string;
   id: number;
   name: string;
-  public: boolean;
+  public?: boolean;
   type: string;
+  owner?: User;
 }
 
 /** A Bitbucket Repository */
-export interface Repository {
+export interface Repository extends HateosObject {
   slug: string;
   id: number;
   name: string;
@@ -29,25 +36,13 @@ export interface Repository {
   forkable: boolean;
   project: Project;
   public: boolean;
+  hierarchyId?: string;
 }
 
 /** A forked Repository */
 export interface ForkedRepository extends Repository {
   /** The original repository that was forked */
   origin: Repository;
-}
-
-/** A Repository and its HATEOS links */
-export interface RepositoryWithMetadata extends Repository {
-  links: {
-    clone: Array<{
-      name: string,
-      href: string,
-    }>,
-    self: Array<{
-      href: string,
-    }>,
-  };
 }
 
 /** Represents a ref; a repository reference */
@@ -67,7 +62,7 @@ export interface Change {
 }
 
 export interface Comment {
-  properties: {
+  properties?: {
     repositoryId: number,
   };
   id: number;
@@ -100,22 +95,24 @@ export interface PullRequestParticipant {
 }
 
 /** A Pull Request */
-export interface PullRequest {
+export interface PullRequest extends HateosObject {
   id: number;
   version: number;
   title: string;
+  description?: string;
   state: string;
   open: boolean;
   closed: boolean;
   createdDate: number;
   updatedDate: number;
+  closedDate?: number;
   fromRef: PullRequestRef;
   toRef: PullRequestRef;
   locked: boolean;
   author: PullRequestParticipant,
   reviewers: PullRequestParticipant[];
   participants: PullRequestParticipant[];
-  links: any[];
+  properties?: any;
 }
 
 /** The base of every event */
@@ -204,13 +201,13 @@ export interface MirrorSynchronizedEvent extends Event {
    */
   refLimitExceeded: boolean;
   /** The repository */
-  repository: RepositoryWithMetadata;
+  repository: Repository;
   /** The ref changes for this push */
   changes: Change[];
 }
 
 export interface PullRequestEvent extends UserEvent {
-  pullrequest: PullRequest;
+  pullRequest: PullRequest;
 }
 
 /** Pull Request created */
@@ -227,6 +224,7 @@ export interface PullRequestUpdatedEvent extends PullRequestEvent {
 export interface PullRequestTarget {
   id: string;
   displayId: string;
+  type: string;
   latestCommit: string;
   latestChangeset: string;
 }

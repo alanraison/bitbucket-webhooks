@@ -77,7 +77,9 @@ export interface PullRequestTemplate {
   author?: PullRequestParticipant,
   reviewers?: PullRequestParticipant[];
   participants?: PullRequestParticipant[];
-  links?: any[];
+  links?: {
+    [name: string]: any[],
+  };
 }
 
 export function pullRequest(template: PullRequestTemplate = {}): PullRequest {
@@ -100,13 +102,12 @@ export function pullRequest(template: PullRequestTemplate = {}): PullRequest {
     author: pullRequestParticipant(),
     reviewers: [],
     participants: [],
-    links: [],
     ...template,
   }
 }
 
 export interface PullRequestEventTemplate extends UserEventTemplate {
-  pullrequest?: PullRequest;
+  pullRequest?: PullRequest;
 }
 
 export interface PullRequestOpenedEventTemplate extends PullRequestEventTemplate { }
@@ -116,7 +117,7 @@ export function pullRequestOpenedEvent(template: PullRequestOpenedEventTemplate 
     eventKey: 'pr:opened',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     ...template,
   }
 }
@@ -130,7 +131,7 @@ export function pullRequestUpdatedEvent(template: PullRequestUpdatedEventTemplat
     eventKey: 'pr:from_ref_updated',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     previousFromHash: '99f3ea32043ba3ecaa28de6046b420de70257d80',
     ...template,
   };
@@ -147,6 +148,7 @@ export function pullRequestTarget(template: PullRequestTargetTemplate = {}): Pul
   return {
     id: 'refs/heads/master',
     displayId: 'master',
+    type: 'BRANCH',
     latestCommit: '860c4eb4ed0f969b47144234ba13c31c498cca69',
     latestChangeset: '860c4eb4ed0f969b47144234ba13c31c498cca69',
     ...template,
@@ -164,7 +166,7 @@ export function pullRequestModifiedEvent(template: PullRequestModifiedEventTempl
     eventKey: 'pr:modified',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     previousTitle: 'A cool PR',
     previousDescription: 'A neat description',
     previousTarget: pullRequestTarget(),
@@ -182,7 +184,7 @@ export function pullRequestReviewersUpdatedEvent(template: PullRequestReviewersU
     eventKey: 'pr:reviewer:updated',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     removedReviewers: [],
     addedReviewers: [user()],
   };
@@ -198,7 +200,7 @@ export function pullRequestApproved(template: PullRequestReviewEventTemplate): P
     eventKey: 'pr:reviewer:approved',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     participant: pullRequestParticipant({
       user: user({
         name: 'approver',
@@ -220,7 +222,7 @@ export function pullRequestUnapproved(template: PullRequestReviewEventTemplate):
     eventKey: 'pr:reviewer:unapproved',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     participant: pullRequestParticipant(),
     previousStatus: 'APPROVED',
     ...template,
@@ -232,7 +234,7 @@ export function pullRequestNeedsWork(template: PullRequestReviewEventTemplate): 
     eventKey: 'pr:reviewer:needs_work',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     participant: pullRequestParticipant(),
     previousStatus: 'UNAPPROVED',
     ...template,
@@ -244,7 +246,7 @@ export function pullRequestMerged(template: PullRequestEventTemplate): PullReque
     eventKey: 'pr:merged',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     ...template,
   }
 }
@@ -254,7 +256,7 @@ export function pullRequestDeclined(template: PullRequestEventTemplate): PullReq
     eventKey: 'pr:declined',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     ...template,
   }
 }
@@ -264,7 +266,7 @@ export function pullRequestDeleted(template: PullRequestEventTemplate): PullRequ
     eventKey: 'pr:deleted',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     ...template,
   }
 }
@@ -279,7 +281,7 @@ export function pullRequestCommentAdded(template: PullRequestCommentEventTemplat
     eventKey: 'pr:comment:added',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     comment: comment(),
     commentParentId: 43,
     ...template,
@@ -295,7 +297,7 @@ export function pullRequestCommentEdited(template: PullRequestCommentEditedTempl
     eventKey: 'pr:comment:edited',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     comment: comment(),
     commentParentId: 43,
     previousComment: 'previous comment',
@@ -308,7 +310,7 @@ export function pullRequestCommentDeleted(template: PullRequestCommentEventTempl
     eventKey: 'pr:comment:deleted',
     date: DEFAULT_DATE,
     actor: user(),
-    pullrequest: pullRequest(),
+    pullRequest: pullRequest(),
     comment: comment(),
     commentParentId: 43,
     ...template,

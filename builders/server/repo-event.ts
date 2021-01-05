@@ -1,4 +1,4 @@
-import { Repository, Change, RepositoryPushEvent, RepositoryModifiedEvent, ForkedRepository, RepositoryForkedEvent, RepositoryWithMetadata, MirrorSynchronizedEvent } from "../../server";
+import { Repository, Change, RepositoryPushEvent, RepositoryModifiedEvent, ForkedRepository, RepositoryForkedEvent, MirrorSynchronizedEvent } from "../../server";
 import { EventTemplate, UserEventTemplate } from "./event";
 import { change } from "./change";
 import { repository, RepositoryTemplate } from "./repo";
@@ -75,7 +75,7 @@ export interface MirrorSynchronizedEventTemplate extends EventTemplate {
   };
   syncType?: string;
   refLimitExceeded?: boolean;
-  repository?: RepositoryWithMetadata;
+  repository?: Repository;
   changes?: Change[];
 }
 

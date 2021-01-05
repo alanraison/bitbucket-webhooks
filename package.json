@@ -4,7 +4,10 @@
   "description": "Type Descriptions for Bitbucket Webhook Events",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "find . \\( -name '*.js' -o -name '*.d.ts' \\) -a \\( -not -path './node_modules/*' \\) -a \\( -not -path './server.d.ts' \\) -delete",
+    "build": "tsc -d",
+    "pretest": "npm run build",
+    "test": "tsd"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
   },
   "homepage": "https://github.com/alanraison/bitbucket-webhooks#readme",
   "devDependencies": {
+    "tsd": "^0.14.0",
     "typescript": "^4.1.3"
   }
 }

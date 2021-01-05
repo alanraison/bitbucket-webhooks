@@ -1,6 +1,6 @@
-import { Change, Comment, CommitCommentAddedEvent, CommitCommentDeleteEvent, CommitCommentEditEvent, Project, Repository, RepositoryWithMetadata } from "../../server";
+import { Comment, CommitCommentAddedEvent, CommitCommentDeleteEvent, CommitCommentEditEvent, Project, Repository } from "../../server";
 import { comment } from "./comment";
-import { EventTemplate, UserEventTemplate } from "./event";
+import { UserEventTemplate } from "./event";
 import { project } from "./project";
 import { user } from "./user";
 
