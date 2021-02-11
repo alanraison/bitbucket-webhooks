@@ -1,12 +1,6 @@
-import { ChangeRef, Change } from "../../server";
+import { ChangeRef, Change } from '../../server';
 
-export interface ChangeRefTemplate {
-  id?: string;
-  displayId?: string;
-  type?: string;
-}
-
-export function changeRef(template: ChangeRefTemplate = {}): ChangeRef {
+export function changeRef(template: Partial<ChangeRef> = {}): ChangeRef {
   return {
     id: 'refs/heads/master',
     displayId: 'master',
@@ -15,15 +9,7 @@ export function changeRef(template: ChangeRefTemplate = {}): ChangeRef {
   };
 }
 
-export interface ChangeTemplate {
-  ref?: ChangeRef;
-  refId?: string;
-  fromHash?: string;
-  toHash?: string;
-  type?: string;
-}
-
-export function change(template: ChangeTemplate = {}): Change {
+export function change(template: Partial<Change> = {}): Change {
   return {
     ref: changeRef(),
     refId: 'refs/heads/master',

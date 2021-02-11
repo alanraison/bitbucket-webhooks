@@ -1,60 +1,39 @@
-import { User, Comment } from "../../server";
-import { user } from "./user";
+import { Comment } from '../../server';
+import { user } from './user';
 
-export interface CommitPropertiesTemplate {
-  repositoryId?: number;
+export interface CommitProperties {
+  repositoryId: number;
 }
 
-export interface PermittedOperationsTemplate {
-  editable?: boolean;
-  deletable?: boolean;
+export interface PermittedOperations {
+  editable: boolean;
+  deletable: boolean;
 }
 
 export interface CommentPropertiesTemplate {
   repositoryId?: number;
 }
 
-export interface CommentTemplate {
-  properties: {
-    repositoryId: number,
-  };
-  id?: number;
-  version?: number;
-  text?: string;
-  author?: User;
-  createdDate?: number;
-  updatedDate?: number;
-  comments?: any[];
-  tasks?: any[];
-  permittedOperations?: {
-    editable: boolean,
-    deletable: boolean,
-  };
-}
-
-export function commentProperties(template: CommitPropertiesTemplate = {}): {
-  repositoryId: number;
-} {
+export function commentProperties(template: Partial<CommitProperties> = {}): CommitProperties {
   return {
     repositoryId: 84,
     ...template,
-  }
+  };
 }
-export function comentPermittedOperations(template: PermittedOperationsTemplate = {}): {
-  editable: boolean;
-  deletable: boolean;
-} {
+export function comentPermittedOperations(
+  template: Partial<PermittedOperations> = {},
+): PermittedOperations {
   return {
     editable: true,
     deletable: true,
     ...template,
   };
 }
-const defaultCommentTemplate: CommentTemplate = {
+const defaultCommentTemplate: Partial<Comment> = {
   properties: commentProperties(),
   permittedOperations: comentPermittedOperations(),
-}
-export function comment(template: CommentTemplate = defaultCommentTemplate): Comment {
+};
+export function comment(template: Partial<Comment> = defaultCommentTemplate): Comment {
   return {
     id: 42,
     version: 0,

@@ -1,16 +1,19 @@
-import { Repository, Change, RepositoryPushEvent, RepositoryModifiedEvent, ForkedRepository, RepositoryForkedEvent, MirrorSynchronizedEvent } from "../../server";
-import { EventTemplate, UserEventTemplate } from "./event";
-import { change } from "./change";
-import { repository, RepositoryTemplate } from "./repo";
-import { user } from "./user";
+import {
+  ForkedRepository,
+  MirrorSynchronizedEvent,
+  RepositoryForkedEvent,
+  RepositoryModifiedEvent,
+  RepositoryPushEvent,
+} from '../../server';
+import { change } from './change';
+import { repository } from './repo';
+import { user } from './user';
 
 const DEFAULT_DATE = '2020-02-20T14:49:41+1100';
 
-export interface RepositoryPushEventTemplate extends UserEventTemplate {
-  changes?: Change[];
-}
-
-export function repositoryPushEvent(template: RepositoryPushEventTemplate = {}): RepositoryPushEvent {
+export function repositoryPushEvent(
+  template: Partial<Exclude<RepositoryPushEvent, 'eventKey'>> = {},
+): RepositoryPushEvent {
   return {
     eventKey: 'repo:refs_changed',
     date: DEFAULT_DATE,
@@ -21,12 +24,9 @@ export function repositoryPushEvent(template: RepositoryPushEventTemplate = {}):
   };
 }
 
-export interface RepositoryModifiedEventTemplate extends UserEventTemplate {
-  old?: Repository,
-  new?: Repository,
-}
-
-export function repositoryModifiedEvent(template: RepositoryModifiedEventTemplate): RepositoryModifiedEvent {
+export function repositoryModifiedEvent(
+  template: Partial<Exclude<RepositoryModifiedEvent, 'eventKey'>> = {},
+): RepositoryModifiedEvent {
   return {
     eventKey: 'repo:modified',
     date: DEFAULT_DATE,
@@ -36,14 +36,10 @@ export function repositoryModifiedEvent(template: RepositoryModifiedEventTemplat
       name: 'new',
     }),
     ...template,
-  }
+  };
 }
 
-export interface ForkedRepositoryTemplate extends RepositoryTemplate {
-  origin?: Repository;
-}
-
-export function forkedRepository(template: ForkedRepositoryTemplate = {}): ForkedRepository {
+export function forkedRepository(template: Partial<ForkedRepository> = {}): ForkedRepository {
   return {
     ...repository(),
     origin: repository({
@@ -51,14 +47,12 @@ export function forkedRepository(template: ForkedRepositoryTemplate = {}): Forke
       slug: 'FORK',
     }),
     ...template,
-  }
+  };
 }
 
-export interface RepositoryForkedEventTemplate extends UserEventTemplate {
-  repository?: ForkedRepository;
-}
-
-export function repositoryForkedEvent(template: RepositoryForkedEventTemplate = {}): RepositoryForkedEvent {
+export function repositoryForkedEvent(
+  template: Partial<Exclude<RepositoryForkedEvent, 'eventKey'>> = {},
+): RepositoryForkedEvent {
   return {
     eventKey: 'repo:forked',
     date: DEFAULT_DATE,
@@ -68,18 +62,9 @@ export function repositoryForkedEvent(template: RepositoryForkedEventTemplate = 
   };
 }
 
-export interface MirrorSynchronizedEventTemplate extends EventTemplate {
-  mirrorServer?: {
-    id: string,
-    name: string,
-  };
-  syncType?: string;
-  refLimitExceeded?: boolean;
-  repository?: Repository;
-  changes?: Change[];
-}
-
-export function mirrorSynchronizedEvent(template: MirrorSynchronizedEventTemplate = {}): MirrorSynchronizedEvent {
+export function mirrorSynchronizedEvent(
+  template: Partial<Exclude<MirrorSynchronizedEvent, 'eventKey'>> = {},
+): MirrorSynchronizedEvent {
   return {
     eventKey: 'mirror:repo_synchronized',
     date: DEFAULT_DATE,
@@ -92,16 +77,20 @@ export function mirrorSynchronizedEvent(template: MirrorSynchronizedEventTemplat
     repository: {
       ...repository(),
       links: {
-        clone: [{
-          name: 'ssh',
-          href: 'ssh://git@example.com:7997/project/repository.git'
-        }],
-        self: [{
-          href: 'https://example.com/projects/project/repos/repo/browse',
-        }],
-      }
+        clone: [
+          {
+            name: 'ssh',
+            href: 'ssh://git@example.com:7997/project/repository.git',
+          },
+        ],
+        self: [
+          {
+            href: 'https://example.com/projects/project/repos/repo/browse',
+          },
+        ],
+      },
     },
     changes: [change()],
     ...template,
-  }
+  };
 }

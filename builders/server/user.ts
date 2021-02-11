@@ -1,16 +1,6 @@
-import { User } from "../../server";
+import { User } from '../../server';
 
-export interface UserTemplate {
-  name?: string;
-  emailAddress?: string;
-  id?: number;
-  displayName?: string;
-  active?: boolean;
-  slug?: string;
-  type?: string;
-}
-
-export function user(template: UserTemplate = {}): User {
+export function user(template: Partial<User> = {}): User {
   return {
     name: 'admin',
     emailAddress: 'admin@example.com',

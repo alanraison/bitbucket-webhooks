@@ -4,10 +4,11 @@
   "description": "Type Descriptions for Bitbucket Webhook Events",
   "main": "index.ts",
   "scripts": {
-    "clean": "find . \\( -name '*.js' -o -name '*.d.ts' \\) -a \\( -not -path './node_modules/*' \\) -delete",
+    "clean": "find . \\( -name '*.js' -o -name '*.d.ts' \\) -a -not -path './node_modules/*' -a -not -name '.eslintrc.js' -a -not -name '.prettierrc.js' -delete",
     "build": "tsc -d",
     "pretest": "npm run build",
-    "test": "tsd"
+    "test": "jest",
+    "lint": "eslint **/*.ts"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,18 @@
   },
   "homepage": "https://github.com/alanraison/bitbucket-webhooks#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "jest": "^26.6.3",
+    "jest-runner-eslint": "^0.10.0",
+    "jest-runner-tsd": "^1.1.0",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
     "tsd": "^0.14.0",
     "typescript": "^4.1.3"
   }

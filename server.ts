@@ -1,6 +1,6 @@
 export interface HateosObject {
   links?: {
-    [name: string]: any[]
+    [name: string]: unknown[];
   };
 }
 
@@ -63,7 +63,7 @@ export interface Change {
 
 export interface Comment {
   properties?: {
-    repositoryId: number,
+    repositoryId: number;
   };
   id: number;
   version: number;
@@ -71,11 +71,11 @@ export interface Comment {
   author: User;
   createdDate: number;
   updatedDate: number;
-  comments: any[];
-  tasks: any[];
+  comments: unknown[];
+  tasks: unknown[];
   permittedOperations?: {
-    editable: boolean,
-    deletable: boolean,
+    editable: boolean;
+    deletable: boolean;
   };
 }
 
@@ -109,10 +109,10 @@ export interface PullRequest extends HateosObject {
   fromRef: PullRequestRef;
   toRef: PullRequestRef;
   locked: boolean;
-  author: PullRequestParticipant,
+  author: PullRequestParticipant;
   reviewers: PullRequestParticipant[];
   participants: PullRequestParticipant[];
-  properties?: any;
+  properties?: unknown;
 }
 
 /** The base of every event */
@@ -135,7 +135,7 @@ export interface UserRepositoryEvent extends UserEvent {
   repository: Repository;
 }
 
-/** 
+/**
  * A user pushes one or more commits to a repository. Has an eventKey of `repo:refs_changed`
  */
 export interface RepositoryPushEvent extends UserRepositoryEvent {
@@ -182,7 +182,7 @@ export interface CommitCommentDeleteEvent extends CommitCommentEvent {
 
 /** A mirror has finished synchronizing this repository. Has the eventKey `mirror:repo_synchronized` */
 export interface MirrorSynchronizedEvent extends Event {
-  eventKey: 'mirror:repo_synchronized',
+  eventKey: 'mirror:repo_synchronized';
   /**
    * The mirror which synchronized the changes. This JSON object contains both the `name` and the `id` of the `mirrorServer` which synchronized the changes.
    */
@@ -190,10 +190,10 @@ export interface MirrorSynchronizedEvent extends Event {
     id: string;
     name: string;
   };
-  /** 
+  /**
    * The sync type the mirror used to synchronize the changes which are announced by this webhook.
-   * 
-   * This value can be `snapshot` or `incremental` for mirrors 6.7 and higher. It defaults to `smartMirror` for mirrors before version 6.7. 
+   *
+   * This value can be `snapshot` or `incremental` for mirrors 6.7 and higher. It defaults to `smartMirror` for mirrors before version 6.7.
    */
   syncType: string;
   /**

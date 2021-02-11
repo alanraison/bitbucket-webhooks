@@ -1,6 +1,5 @@
 export * from './change';
 export * from './comment';
-export * from './event';
 export * from './project';
 export * from './pull-request';
 export * from './repo';

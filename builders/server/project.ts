@@ -1,14 +1,6 @@
-import { Project } from "../../server";
+import { Project } from '../../server';
 
-export interface ProjectTemplate {
-  key?: string;
-  id?: number;
-  name?: string;
-  public?: boolean;
-  type?: string;
-}
-
-export function project(template: ProjectTemplate = {}): Project {
+export function project(template: Partial<Project> = {}): Project {
   return {
     key: 'PROJ',
     id: 84,
