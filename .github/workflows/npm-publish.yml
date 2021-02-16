@@ -28,7 +28,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm --no-git-tag version $( sed -e 's/^v//' <<<${GITHUB_REF} )
+      - run: sh -c "npm --no-git-tag version $( sed -e 's/^v//' <<<${GITHUB_REF} )"
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
